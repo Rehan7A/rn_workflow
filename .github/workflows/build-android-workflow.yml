@@ -5,7 +5,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-system
+        runs-on: ubuntu-latest
         
         steps:
         - name: Checkout Respository
@@ -28,3 +28,10 @@ jobs:
 
         - name: Build Application
           run: cd android && ./gradlew assembleRelease
+
+        - name: Upload Build
+          uses: actions/upload-artifact@v4
+          with:
+            name: app
+            path: ./android/app/build/outputs/apk/release/app-release.apk
+            retention-day: 3
