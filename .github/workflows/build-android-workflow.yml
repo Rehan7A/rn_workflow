@@ -1,0 +1,30 @@
+name: "Build Android app"
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-system
+        
+        steps:
+        - name: Checkout Respository
+          uses: actions/checkout@v4
+
+        - name: Setting Node
+          uses: actions/setup-node@v4
+
+        - name: Java Setup
+          uses: actions/setup-java@v4
+          with:
+            java-version: '17'
+            distribution: 'zulu'
+
+        - name: Validate gradle wrapper
+          uses: gradle/wrapper-validation-action@v3
+
+        - name: Run Yarn Install
+          run: yarn install
+
+        - name: Build Application
+          run: cd android && ./gradlew assembleRelease
